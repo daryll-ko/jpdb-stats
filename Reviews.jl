@@ -1,6 +1,6 @@
 module Reviews
 
-export Review, get_review_info_array
+export Review, parse_reviews
 
 struct Review
     timestamp::Int
@@ -8,15 +8,15 @@ struct Review
     from_anki::Bool
 end
 
-function get_review_info(review)
+function parse_review(review)
     timestamp = review["timestamp"]
     grade = review["grade"]
     from_anki = review["from_anki"]
     return Review(timestamp, grade, from_anki)
 end
 
-function get_review_info_array(reviews)
-    return map(review -> get_review_info(review), reviews)
+function parse_reviews(reviews)
+    return map(review -> parse_review(review), reviews)
 end
 
 end
