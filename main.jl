@@ -1,12 +1,17 @@
 import JSON
 
+include("./Cards.jl")
+
+import .Cards: Card, Review, get_card_info_array
+
 function main()
     open("reviews.json", "r") do f
         s = read(f, String)
         j = JSON.parse(s)
-        jp_en_cards = j["cards_vocabulary_jp_en"]
+        jp_en_deck = j["cards_vocabulary_jp_en"]
+        jp_en_cards = get_card_info_array(jp_en_deck)
         for i in eachindex(jp_en_cards)
-            display(jp_en_cards[i]["reviews"])
+            display(jp_en_cards[i])
             break
         end
     end
