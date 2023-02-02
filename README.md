@@ -8,7 +8,7 @@ j
 │   ├── vid: Int
 │   ├── spelling: String
 │   ├── reading: String
-│   └── reviews = Review[]
+│   └── reviews: Review[]
 │       ├── timestamp: Int
 │       ├── grade: "unknown" | "okay"
 │       └── from_anki: Bool
