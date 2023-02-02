@@ -6,9 +6,9 @@ Relevant structure:
 j
 ├── cards_vocabulary_jp_en: Card[]
 │   ├── vid: Int
-│	├── spelling: String
-│	├── reading: String
-│	└── reviews = Review[]
+│   ├── spelling: String
+│   ├── reading: String
+│   └── reviews = Review[]
 │       ├── timestamp: Int
 │       ├── grade: "unknown" | "okay"
 │       └── from_anki: Bool
