@@ -7,8 +7,15 @@ include("./Cards.jl")
 import .Cards: Card, Review, parse_cards
 
 function get_review_frequencies(cards)
-    rows = [(word=card.spelling, review_frequency=length(card.reviews)) for card in cards]
-    return DataFrame(rows)
+    rows = [
+        (
+            word=card.spelling,
+            review_frequency=length(card.reviews),
+        ) for card in cards
+    ]
+    df = DataFrame(rows)
+    sort!(df, [:review_frequency], rev=[true])
+    return df
 end
 
 function main()
