@@ -2,7 +2,7 @@
 
 Relevant structure:
 
-```julia
+```bash
 j
 ├── cards_vocabulary_jp_en: Card[]
 │   ├── vid: Int
