@@ -13,11 +13,7 @@ end
 
 function main()
     open("reviews.json", "r") do f
-        s = read(f, String)
-        j = JSON.parse(s)
-        jp_en_deck = j["cards_vocabulary_jp_en"]
-        jp_en_cards = parse_cards(jp_en_deck)
-        display(get_word_review_frequency_table(jp_en_cards))
+        read(f, String) |> JSON.parse |> (j -> j["cards_vocabulary_jp_en"]) |> parse_cards |> get_word_review_frequency_table |> display
     end
 end
 
