@@ -1,6 +1,5 @@
 import JSON
-
-using DataFrames
+import DataFrames as DF
 
 include("./Cards.jl")
 
@@ -13,7 +12,7 @@ function get_review_frequencies(cards)
             review_frequency=length(card.reviews),
         ) for card in cards
     ]
-    df = DataFrame(rows)
+    df = DF.DataFrame(rows)
     sort!(df, [:review_frequency], rev=[true])
     return df
 end
