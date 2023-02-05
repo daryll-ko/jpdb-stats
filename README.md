@@ -1,5 +1,19 @@
 # `jpdb-stats`
 
+## Instructions
+
+ー、Download the `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings).
+
+二、Install the necessary packages:
+
+```bash
+pkg> add JSON DataFrames
+```
+
+三、Run `julia main.jl`.
+
+## Notes
+
 Relevant structure:
 
 ```bash
