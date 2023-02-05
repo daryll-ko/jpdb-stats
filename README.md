@@ -2,7 +2,7 @@
 
 ## Instructions
 
-ー、Download the `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings).
+ー、Download the `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't have a jpdb account, you may use mine as a sample (it may not be up to date, however).
 
 二、Install the necessary packages:
 
