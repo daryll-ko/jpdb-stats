@@ -10,7 +10,7 @@ function convert_timestamp(timestamp)
     return Dates.format(Dates.unix2datetime(timestamp), "U d, yyyy")
 end
 
-function get_latest_timestamp(reviews)
+function latest_timestamp(reviews)
     latest = 0
     for review in reviews
         latest = max(latest, review.timestamp)
@@ -23,7 +23,7 @@ function tabulate_data(cards)
         (
             word=card.spelling,
             review_frequency=length(card.reviews),
-            latest_review=(convert_timestamp ∘ get_latest_timestamp)(card.reviews)
+            latest_review=(convert_timestamp ∘ latest_timestamp)(card.reviews)
         ) for card in cards
     ]
     df = DF.DataFrame(rows)
