@@ -1,4 +1,5 @@
-import Dates
+using Dates
+
 import JSON
 import DataFrames as DF
 
@@ -7,7 +8,7 @@ include("./Cards.jl")
 import .Cards: Card, Review, parse_cards
 
 function convert_timestamp(timestamp)
-    return Dates.format(Dates.unix2datetime(timestamp) + Dates.Hour(8), "U d, yyyy (HH:MM)")
+    return Dates.format(unix2datetime(timestamp) + Hour(8), "U d, yyyy (HH:MM)")
 end
 
 function latest_timestamp(reviews)
