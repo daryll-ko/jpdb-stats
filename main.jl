@@ -7,7 +7,7 @@ include("./Cards.jl")
 import .Cards: Card, Review, parse_cards
 
 function convert_timestamp(timestamp)
-    return Dates.format(Dates.unix2datetime(timestamp), "U d, yyyy")
+    return Dates.format(Dates.unix2datetime(timestamp) + Dates.Hour(8), "U d, yyyy (HH:MM)")
 end
 
 function latest_timestamp(reviews)
