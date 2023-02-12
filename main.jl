@@ -1,5 +1,5 @@
 using Dates
-using Plots
+using Plots; plotlyjs()
 
 import JSON
 import DataFrames as DF
