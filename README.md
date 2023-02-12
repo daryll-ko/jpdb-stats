@@ -10,7 +10,17 @@
 pkg> add JSON DataFrames
 ```
 
-三、Run `julia main.jl`.
+三、Include `main.jl` in the Julia REPL:
+
+```bash
+julia> include("main.jl")
+```
+
+四、Run the main function!
+
+```bash
+julia> main()
+```
 
 ## Notes
 
