@@ -1,4 +1,5 @@
 using Dates
+using Plots
 
 import JSON
 import DataFrames as DF
@@ -31,11 +32,22 @@ function tabulate_data(cards)
     return df
 end
 
-function main()
-    open("reviews.json", "r") do f
-        df = read(f, String) |> JSON.parse |> (j -> j["cards_vocabulary_jp_en"]) |> parse_cards |> tabulate_data
-        display(df[1:10, :])
+function group_reviews_by_date(cards)
+    date_counts = Dict{Date, Int}()
+    for card in cards, review in card.reviews
+        review_date = Date(unix2datetime(review.timestamp) + Hour(8))
+        date_counts[review_date] = get(date_counts, review_date, 0) + 1
     end
+    return date_counts
 end
 
-main()
+function plot_reviews_by_date(date_counts)
+    bar(collect(keys(date_counts)), collect(values(date_counts)))
+end
+
+function main()
+    open("reviews.json", "r") do f
+        cards = read(f, String) |> JSON.parse |> (j -> j["cards_vocabulary_jp_en"]) |> parse_cards
+        cards |> group_reviews_by_date |> plot_reviews_by_date
+    end
+end
