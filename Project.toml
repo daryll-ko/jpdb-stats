@@ -1,0 +1,4 @@
+name = "JPDBStats"
+uuid = "d46172d7-78a4-4f4f-88ae-bf336c0ee24f"
+authors = ["Daryll Ko <daryll.ko@gmail.com>"]
+version = "0.1.0"
