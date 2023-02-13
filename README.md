@@ -33,7 +33,7 @@ julia> main()
 Relevant structure:
 
 ```bash
-j
+reviews.json
 ├── cards_vocabulary_jp_en: Card[]
 │   ├── vid: Int
 │   ├── spelling: String
