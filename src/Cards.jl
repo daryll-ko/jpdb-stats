@@ -3,7 +3,6 @@ module Cards
 export Card, parse_cards
 
 include("./Reviews.jl")
-
 import .Reviews: Review, parse_reviews
 
 struct Card

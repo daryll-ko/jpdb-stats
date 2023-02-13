@@ -1,24 +1,30 @@
-# `jpdb-stats`
+# `jpdb-stats` (`JPDBStats.jl`)
 
 ## Instructions
 
-ー、Download the `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't have a jpdb account, you may use mine as a sample (it may not be up to date, however).
+I assume you have [Julia](https://julialang.org/)?
 
-二、Install the necessary packages:
+1. Clone the project using `git clone`.
+
+2. Download your `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't have a jpdb account, you may use mine as a sample (it may not be up to date, however).
+
+3. Activate the project in the Julia REPL (make sure you're in the package folder)
 
 ```bash
-pkg> add JSON DataFrames
+(v1.8) pkg> activate .
 ```
 
-三、Include `main.jl` in the Julia REPL:
+4. Install the relevant packages:
 
 ```bash
-julia> include("main.jl")
+(JPDBStats) pkg> instantiate
 ```
 
-四、Run the main function!
+5. Use the package!
 
 ```bash
+julia> using JPDBStats
+
 julia> main()
 ```
 
