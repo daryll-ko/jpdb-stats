@@ -6,7 +6,7 @@ I assume you have [Julia](https://julialang.org/)?
 
 1. Clone the project using `git clone`.
 
-2. Download your `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't have a jpdb account, you may use mine as a sample (it may not be up to date, however).
+2. Download your `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't use jpdb, you may use mine as a sample (it may not be up to date, however).
 
 3. Activate the project in the Julia REPL (make sure you're in the package folder)
 
