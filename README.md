@@ -34,6 +34,7 @@ Relevant structure:
 
 ```bash
 reviews.json
+│
 ├── cards_vocabulary_jp_en: Card[]
 │   ├── vid: Int
 │   ├── spelling: String
