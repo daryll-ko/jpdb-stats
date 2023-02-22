@@ -53,7 +53,7 @@ Since I only use JP to EN vocab cards, the decks `cards_vocabulary_en_jp`, `card
 
 I use the 2-point grading scale setting, so the value of `grade` in my case is always either `unknown` or `okay`.
 
-## Dev write-up
+## Write-up
 
 This was inspired by `bijak`'s [`jpdb_stats` repo](https://github.com/bijak/jpdb_stats). Because I have a copious amount of jpdb.io data, I thought this would be an excellent opportunity to work with Julia from a data-driven perspective.
 
