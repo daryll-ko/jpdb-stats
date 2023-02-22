@@ -59,7 +59,7 @@ This was inspired by `bijak`'s [`jpdb_stats` repo](https://github.com/bijak/jpdb
 
 I'd like to highlight *data-driven* here. There have been a bunch of data-related projects that I've churned in my head, only to be shot down because I classified them as vanity metric obsessions. For example, I have a *lot* of data on AniList, but I've made it a personal rule to not bother doing data analysis related to it: I don't think it's a fruitful use of my time.
 
-In contrast, analyzing my stats in `jpdb` gives me relevant ground to work on. One use case that motivated this whole thing is the first place is *batching*: at what time of the day do I usually do my reviews, and are there any immediate changes I can make to my review habits to make my active study time minimal?
+In contrast, analyzing my stats in `jpdb` gives me relevant ground to work on. One use case that motivated this whole thing in the first place is *batching*: at what time of the day do I usually do my reviews, and are there any immediate changes I can make to my review habits to make my active study time minimal?
 
 One fun thing to think about throughout this project was how to keep the interface as modular as possible. If I had a table of card data, how could I design things to make feature extraction seamless?
 
