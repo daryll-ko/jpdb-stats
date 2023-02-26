@@ -30,6 +30,12 @@ julia> main()
 
 ## Notes
 
+To make sure Revise.jl works correctly:
+
+1. **Always** start with `pkg> activate .`
+2. Activate Revise.jl with `julia> using Revise`
+3. Activate package with `julia> using JPDBStats`
+
 Relevant structure:
 
 ```bash
@@ -57,9 +63,9 @@ I use the 2-point grading scale setting, so the value of `grade` in my case is a
 
 This was inspired by `bijak`'s [`jpdb_stats` repo](https://github.com/bijak/jpdb_stats). Because I have a copious amount of jpdb.io data, I thought this would be an excellent opportunity to work with Julia from a data-driven perspective.
 
-I'd like to highlight *data-driven* here. There have been a bunch of data-related projects that I've churned in my head, only to be shot down because I classified them as vanity metric obsessions. For example, I have a *lot* of data on AniList, but I've made it a personal rule to not bother doing data analysis related to it: I don't think it's a fruitful use of my time.
+I'd like to highlight _data-driven_ here. There have been a bunch of data-related projects that I've churned in my head, only to be shot down because I classified them as vanity metric obsessions. For example, I have a _lot_ of data on AniList, but I've made it a personal rule to not bother doing data analysis related to it: I don't think it's a fruitful use of my time.
 
-In contrast, analyzing my stats in `jpdb` gives me relevant ground to work on. One use case that motivated this whole thing in the first place is *batching*: at what time of the day do I usually do my reviews, and are there any immediate changes I can make to my review habits to make my active study time minimal?
+In contrast, analyzing my stats in `jpdb` gives me relevant ground to work on. One use case that motivated this whole thing in the first place is _batching_: at what time of the day do I usually do my reviews, and are there any immediate changes I can make to my review habits to make my active study time minimal?
 
 One fun thing to think about throughout this project was how to keep the interface as modular as possible. If I had a table of card data, how could I design things to make feature extraction seamless?
 
