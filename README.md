@@ -1,14 +1,14 @@
 # `jpdb-stats` (`JPDBStats.jl`)
 
-## Instructions
+## Setup
 
 I assume you have [Julia](https://julialang.org/)?
 
-1. Clone the project using `git clone`.
+1. Clone the project using `git clone git@github.com:daryll-ko/jpdb-stats.git`.
 
-2. Download your `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't use jpdb, you may use mine as a sample (it may not be up to date, however).
+2. Download your `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't use jpdb, you may use [mine](https://github.com/daryll-ko/jpdb-stats/blob/main/reviews.json) as a sample (it may not be up to date, however).
 
-3. Activate the project in the Julia REPL (make sure you're in the package folder):
+3. Activate the project in the Julia REPL (make sure you're in the `jpdb-stats` folder):
 
 ```bash
 (v1.8) pkg> activate .
