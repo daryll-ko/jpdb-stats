@@ -28,6 +28,28 @@ julia> using JPDBStats
 julia> main()
 ```
 
+## Usage
+
+The first thing I would recommend doing is binding the package to a short variable:
+
+```bash
+julia> const JS = JPDBStats
+```
+
+This makes it so that future references to the package can be made by just typing `JS` instead of `JPDBStats`.
+
+The function `load_cards` turns the JP-to-EN vocab deck of the `reviews.json` file into a list of `Card`s:
+
+```bash
+julia> const cards = JS.load_cards()
+```
+
+The function `get_all_reviews` extracts all individual review instances from the list of `Card`s:
+
+```bash
+julia> const reviews = JS.get_all_reviews(cards)
+```
+
 ## Notes
 
 To make sure Revise.jl works correctly:
