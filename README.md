@@ -20,12 +20,12 @@ I assume you have [Julia](https://julialang.org/)?
 (JPDBStats) pkg> instantiate
 ```
 
-5. Use the package!
+5. Setup Revise.jl and import the package.
 
 ```bash
-julia> using JPDBStats
+julia> using Revise
 
-julia> main()
+julia> using JPDBStats
 ```
 
 ## Usage
