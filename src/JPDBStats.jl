@@ -101,15 +101,12 @@ function plot_review_stats(counter)
 end
 
 function tabulate_card_data(cards)
-    date_format = "u d, Y"
     rows = [(
         word = card.spelling,
         reading = card.reading,
         review_count = length(card.reviews),
-        last_reviewed = Dates.format(latest_review(card).datetime, date_format),
-        first_encountered = Dates.format(earliest_review(card).datetime, date_format),
-        last_reviewed_raw = latest_review(card).datetime,
-        first_encountered_raw = earliest_review(card).datetime,
+        last_reviewed = latest_review(card).datetime,
+        first_encountered = earliest_review(card).datetime,
     ) for card in cards]
 
     df = DataFrame()
