@@ -119,7 +119,7 @@ end
 #= Writes =#
 
 function write_to_csv(df, filename)
-    path = joinpath(pkgdir(JPDBStats), "$filename.csv")
+    path = joinpath(pkgdir(JPDBStats), "results", "$filename.csv")
     CSV.write(path, df)
 end
 
