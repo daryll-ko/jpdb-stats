@@ -62,7 +62,6 @@ Relevant types:
 
 ```ts
 type FivePointGrade = "nothing" | "something" | "hard" | "okay" | "easy";
-
 type TwoPointGrade = "pass" | "fail";
 
 interface Review {
