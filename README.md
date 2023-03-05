@@ -58,7 +58,28 @@ To make sure Revise.jl works correctly:
 2. Activate Revise.jl with `julia> using Revise`
 3. Activate package with `julia> using JPDBStats`
 
-Relevant structure:
+Relevant types:
+
+```ts
+type FivePointGrade = "nothing" | "something" | "hard" | "okay" | "easy";
+
+type TwoPointGrade = "pass" | "fail";
+
+interface Review {
+	datetime: Date;
+	grade: "unknown" | FivePointGrade | TwoPointGrade;
+	from_anki: boolean;
+}
+
+interface Card {
+	vid: number;
+	spelling: string;
+	reading: string;
+	reviews: Review[];
+}
+```
+
+JSON file structure:
 
 ```bash
 reviews.json
@@ -78,8 +99,6 @@ reviews.json
 ```
 
 Since I only use JP to EN vocab cards, the decks `cards_vocabulary_en_jp`, `cards_kanji_keyword_char`, and `cards_kanji_char_keyword` are empty for me.
-
-I use the 2-point grading scale setting, so the value of `grade` in my case is always either `unknown` or `okay`.
 
 ## Write-up
 
