@@ -78,7 +78,7 @@ interface Card {
 }
 ```
 
-JSON file structure:
+JSON structure:
 
 ```bash
 reviews.json
@@ -89,7 +89,7 @@ reviews.json
 │   ├── reading: String
 │   └── reviews: Review[]
 │       ├── timestamp: Int
-│       ├── grade: "unknown" | "okay"
+│       ├── grade: "unknown" | FivePointGrade | TwoPointGrade
 │       └── from_anki: Bool
 │
 ├── cards_vocabulary_en_jp: Card[]
