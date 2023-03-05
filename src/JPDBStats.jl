@@ -1,11 +1,10 @@
 module JPDBStats
 
-using Dates
-using Plots
 using CSV
-
-import JSON
-import DataFrames as DF
+using DataFrames
+using Dates
+using JSON
+using Plots
 
 #= Structs =#
 
@@ -113,7 +112,7 @@ function tabulate_card_data(cards)
         first_encountered_raw = earliest_review(card).datetime,
     ) for card in cards]
 
-    df = DF.DataFrame()
+    df = DataFrame()
     for row in rows
         push!(df, row)
     end
