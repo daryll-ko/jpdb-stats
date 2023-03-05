@@ -53,6 +53,11 @@ function localize(timestamp)
     return datetime2unix(unix2datetime(timestamp) + Hour(8))
 end
 
+function earliest_review(card)
+    (_, index) = findmin(review -> review.datetime, card.reviews)
+    return card.reviews[index]
+end
+
 function latest_review(card)
     (_, index) = findmax(review -> review.datetime, card.reviews)
     return card.reviews[index]
@@ -101,11 +106,15 @@ function plot_review_stats(counter)
 end
 
 function tabulate_card_data(cards)
+    date_format = "u d, Y"
     rows = [(
         word = card.spelling,
         reading = card.reading,
         review_count = length(card.reviews),
-        last_reviewed = Dates.format(latest_review(card).datetime, "u d, Y")
+        last_reviewed = Dates.format(latest_review(card).datetime, date_format),
+        first_encountered = Dates.format(earliest_review(card).datetime, date_format),
+        last_reviewed_raw = latest_review(card).datetime,
+        first_encountered_raw = earliest_review(card).datetime,
     ) for card in cards]
 
     df = DF.DataFrame()
