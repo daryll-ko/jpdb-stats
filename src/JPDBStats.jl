@@ -105,7 +105,7 @@ function tabulate_card_data(cards)
         word = card.spelling,
         reading = card.reading,
         review_count = length(card.reviews),
-        last_reviewed = latest_review(card).datetime
+        last_reviewed = Dates.format(latest_review(card).datetime, "u d, Y")
     ) for card in cards]
 
     df = DF.DataFrame()
