@@ -41,13 +41,13 @@ This makes it so that future references to the package can be made by just typin
 The function `load_cards` turns the JP-to-EN vocab deck of the `reviews.json` file into a list of `Card`s:
 
 ```bash
-julia> const cards = JS.load_cards()
+julia> cards = JS.load_cards()
 ```
 
 The function `get_all_reviews` extracts all individual review instances from the list of `Card`s:
 
 ```bash
-julia> const reviews = JS.get_all_reviews(cards)
+julia> reviews = JS.get_all_reviews(cards)
 ```
 
 ## Notes
