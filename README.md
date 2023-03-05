@@ -82,6 +82,8 @@ julia> JS.filter_words(df, yojijukugo)
 
 ```bash
 julia> repeater = r"^([一-龯ぁ-んァ-ン]{2})\1$|^[一-龯]々$" # 「いよいよ」や「そろそろ」や「度々」や「人々」など
+
+julia> JS.filter_words(df, repeater)
 ```
 
 ## Notes
