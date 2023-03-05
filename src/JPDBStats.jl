@@ -2,6 +2,7 @@ module JPDBStats
 
 using Dates
 using Plots
+using CSV
 
 import JSON
 import DataFrames as DF
@@ -99,19 +100,27 @@ function plot_review_stats(counter)
     bar(collect(keys(counter)), collect(values(counter)))
 end
 
-function tabulate_data(cards)
-    word = [card.spelling for card in cards]
-    reading = [card.reading for card in cards]
-    review_count = [length(card.reviews) for card in cards]
-    latest_review_date = [latest_review(card).datetime for card in cards]
+function tabulate_card_data(cards)
+    rows = [(
+        word = card.spelling,
+        reading = card.reading,
+        review_count = length(card.reviews),
+        last_reviewed = latest_review(card).datetime
+    ) for card in cards]
 
-    df = DF.DataFrame(
-        word=word,
-        reading=reading,
-        review_count=review_count,
-        latest_review_date=latest_review_date
-    )
+    df = DF.DataFrame()
+    for row in rows
+        push!(df, row)
+    end
+
     return df
+end
+
+#= Writes =#
+
+function write_to_csv(df, filename)
+    path = joinpath(pkgdir(JPDBStats), "$filename.csv")
+    CSV.write(path, df)
 end
 
 end
