@@ -47,7 +47,7 @@ function parse_cards(cards)
     return map(card -> parse_card(card), cards)
 end
 
-#= Utils =#
+#= Utilities =#
 
 function localize(timestamp)
     return datetime2unix(unix2datetime(timestamp) + Hour(8))
