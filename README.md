@@ -50,6 +50,40 @@ The function `get_all_reviews` extracts all individual review instances from the
 julia> reviews = JS.get_all_reviews(cards)
 ```
 
+Once you've extracted your cards and their reviews, there are several ways to look at the data you have at hand in a cleaner format.
+
+The function `tabulate_card_data` returns a DataFrame containing basic information (word, reading, review count, last review date) for each card you have:
+
+```bash
+julia> df = JS.tabulate_card_data(cards)
+```
+
+Once you have your DataFrame, you can do all sorts of cool stuff with it!
+
+For example, you can sort the cards by their review count:
+
+```bash
+julia> sort(df, :review_count)
+```
+
+Or you can filter cards matching a specific regular expression using the helper function `filter_words`:
+
+```bash
+julia> no = r"^不" # 「不便」や「不吉」や「不正」など
+
+julia> JS.filter_words(df, no)
+```
+
+```bash
+julia> yojijukugo = r"^[一-龯]{4}$" # 四字熟語
+
+julia> JS.filter_words(df, yojijukugo)
+```
+
+```bash
+julia> repeater = r"^([一-龯ぁ-んァ-ン]{2})\1$|^[一-龯]々$" # 「いよいよ」や「そろそろ」や「度々」や「人々」など
+```
+
 ## Notes
 
 To make sure Revise.jl works correctly:
