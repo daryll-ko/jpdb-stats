@@ -12,11 +12,9 @@ import DataFrames as DF
 struct Review
     datetime::DateTime
     grade::String
-    from_anki::Bool
 end
 
 struct Card
-    vid::Int
     spelling::String
     reading::String
     reviews::Vector{Review}
@@ -27,8 +25,7 @@ end
 function parse_review(review)
     datetime = (unix2datetime ∘ localize)(review["timestamp"])
     grade = review["grade"]
-    from_anki = review["from_anki"]
-    return Review(datetime, grade, from_anki)
+    return Review(datetime, grade)
 end
 
 function parse_reviews(reviews)
@@ -36,11 +33,10 @@ function parse_reviews(reviews)
 end
 
 function parse_card(card)
-    vid = card["vid"]
     spelling = card["spelling"]
     reading = card["reading"]
     reviews = parse_reviews(card["reviews"])
-    return Card(vid, spelling, reading, reviews)
+    return Card(spelling, reading, reviews)
 end
 
 function parse_cards(cards)

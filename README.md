@@ -103,11 +103,9 @@ type TwoPointGrade = "pass" | "fail";
 interface Review {
 	datetime: Date;
 	grade: "unknown" | FivePointGrade | TwoPointGrade;
-	from_anki: boolean;
 }
 
 interface Card {
-	vid: number;
 	spelling: string;
 	reading: string;
 	reviews: Review[];
@@ -132,6 +130,8 @@ reviews.json
 ├── cards_kanji_keyword_char: Card[]
 └── cards_kanji_char_keyword: Card[]
 ```
+
+A `Card`'s `vid` and a `Review`'s `from_anki` status are not properties of the structs I define.
 
 Since I only use JP to EN vocab cards, the decks `cards_vocabulary_en_jp`, `cards_kanji_keyword_char`, and `cards_kanji_char_keyword` are empty for me.
 
