@@ -88,11 +88,11 @@ julia> JS.filter_words(df, repeater)
 
 ## Notes
 
-To make sure Revise.jl works correctly:
+If you've already gone through the setup instructions once, some steps become unneeded; in future sessions (i.e., when starting up `julia`), only the following steps suffice:
 
-1. **Always** start with `pkg> activate .`
+1. Start with `pkg> activate .`
 2. Activate Revise.jl with `julia> using Revise`
-3. Activate package with `julia> using JPDBStats`
+3. Activate JPDBStats.jl with `julia> using JPDBStats`
 
 Relevant types:
 
