@@ -33,7 +33,7 @@ julia> main()
 The first thing I would recommend doing is binding the package to a short variable:
 
 ```bash
-julia> const JS = JPDBStats
+julia> JS = JPDBStats
 ```
 
 This makes it so that future references to the package can be made by just typing `JS` instead of `JPDBStats`.
