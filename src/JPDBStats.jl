@@ -116,6 +116,11 @@ function tabulate_card_data(cards)
     return df
 end
 
+function filter_words(df, pattern)
+    matches_pattern(word) = occursin(pattern, word)
+    filter(:word => matches_pattern, df)
+end
+
 #= Writes =#
 
 function write_to_csv(df, filename)
