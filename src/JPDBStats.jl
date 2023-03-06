@@ -49,12 +49,12 @@ function localize(timestamp)
 end
 
 function earliest_review(card)
-    (_, index) = findmin(review -> review.datetime, card.reviews)
+    _, index = findmin(review -> review.datetime, card.reviews)
     return card.reviews[index]
 end
 
 function latest_review(card)
-    (_, index) = findmax(review -> review.datetime, card.reviews)
+    _, index = findmax(review -> review.datetime, card.reviews)
     return card.reviews[index]
 end
 
