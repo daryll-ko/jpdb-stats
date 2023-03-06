@@ -82,7 +82,11 @@ end
 
 function load_cards(filename="reviews.json")
     open(filename, "r") do f
-        return read(f, String) |> JSON.parse |> (j -> j["cards_vocabulary_jp_en"]) |> parse_cards
+        return
+            read(f, String) |>
+            JSON.parse |>
+            (json -> json["cards_vocabulary_jp_en"]) |>
+            parse_cards
     end
 end
 
