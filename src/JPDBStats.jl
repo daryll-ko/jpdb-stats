@@ -98,7 +98,7 @@ function get_all_reviews(cards)
 end
 
 function get_new_reviews(reviews)
-    return filter(review -> review["grade"] == "unknown", reviews);
+    return filter(review -> review.grade == "unknown", reviews)
 end
 
 #= Views =#
