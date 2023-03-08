@@ -69,19 +69,19 @@ julia> sort(df, :review_count)
 Or you can filter cards matching a specific regular expression using the helper function `filter_words`:
 
 ```bash
-julia> no = r"^不" # 「不便」や「不吉」や「不正」など
+julia> no = r"^不" #「不便」や「不吉」や「不正」など
 
 julia> JS.filter_words(df, no)
 ```
 
 ```bash
-julia> yojijukugo = r"^[一-龯]{4}$" # 四字熟語
+julia> yojijukugo = r"^[一-龯]{4}$" #「一石二鳥」や「中途半端」や「十中八九」など
 
 julia> JS.filter_words(df, yojijukugo)
 ```
 
 ```bash
-julia> repeater = r"^([一-龯ぁ-んァ-ン]{2})\1$|^[一-龯]々$" # 「いよいよ」や「そろそろ」や「度々」や「人々」など
+julia> repeater = r"^([一-龯ぁ-んァ-ン]{2})\1$|^[一-龯]々$" #「いよいよ」や「そろそろ」や「度々」や「人々」など
 
 julia> JS.filter_words(df, repeater)
 ```
