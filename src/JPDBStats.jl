@@ -69,10 +69,10 @@ function group_by_date(reviews)
     return counter
 end
 
-function group_by_hour(reviews)
+function group_by_unit(reviews, unit)
     counter = Dict{Int, Int}()
     for review in reviews
-        hour_of_date = hour(review.datetime)
+        hour_of_date = unit(review.datetime)
         counter[hour_of_date] = get(counter, hour_of_date, 0) + 1
     end
     return counter
