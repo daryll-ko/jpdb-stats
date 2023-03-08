@@ -97,9 +97,13 @@ function get_all_reviews(cards)
     return reviews
 end
 
+function get_new_cards(reviews)
+    return filter(review -> review["grade"] == "unknown", reviews);
+end
+
 #= Views =#
 
-function plot_review_stats(counter)
+function plot_counter(counter)
     bar(collect(keys(counter)), collect(values(counter)))
 end
 
@@ -111,6 +115,20 @@ function tabulate_card_data(cards)
         last_reviewed = latest_review(card).datetime,
         first_encountered = earliest_review(card).datetime,
     ) for card in cards]
+
+    df = DataFrame()
+    for row in rows
+        push!(df, row)
+    end
+
+    return df
+end
+
+function tabulate_review_data(reviews)
+    rows = [(
+        datetime = review.datetime,
+        grade = review.grade,
+    ) for review in reviews]
 
     df = DataFrame()
     for row in rows
