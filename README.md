@@ -1,10 +1,10 @@
-# `jpdb-stats` (`JPDBStats.jl`)
+# `JPDBStats.jl`
 
 ## Setup
 
 I assume you have [Julia](https://julialang.org/)?
 
-1. Clone the project using `git clone git@github.com:daryll-ko/jpdb-stats.git`.
+1. Clone the project using `git@github.com:daryll-ko/JPDBStats.jl.git`.
 
 2. Download your `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't use jpdb, you may use [mine](https://github.com/daryll-ko/jpdb-stats/blob/main/reviews.json) as a sample (it may not be up to date, however).
 
