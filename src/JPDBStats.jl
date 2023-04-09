@@ -22,7 +22,7 @@ end
 #= Parsers =#
 
 function parse_review(review)
-    datetime = (unix2datetime ∘ localize)(review["timestamp"])
+    datetime = (localize ∘ unix2datetime)(review["timestamp"])
     grade = review["grade"]
     return Review(datetime, grade)
 end
@@ -44,8 +44,8 @@ end
 
 #= Utilities =#
 
-function localize(timestamp)
-    return datetime2unix(unix2datetime(timestamp) + Hour(8))
+function localize(date)
+    return date + Hour(8)
 end
 
 function earliest_review(card)
