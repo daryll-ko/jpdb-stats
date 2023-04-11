@@ -61,7 +61,7 @@ end
 #= Groupings =#
 
 function group_by_date(reviews)
-    counter = Dict{Date, Int}()
+    counter = Dict{Date,Int}()
     for review in reviews
         date = Date(review.datetime)
         counter[date] = get(counter, date, 0) + 1
@@ -70,7 +70,7 @@ function group_by_date(reviews)
 end
 
 function group_by_unit(reviews, unit)
-    counter = Dict{Int, Int}()
+    counter = Dict{Int,Int}()
     for review in reviews
         hour_of_date = unit(review.datetime)
         counter[hour_of_date] = get(counter, hour_of_date, 0) + 1
@@ -82,10 +82,10 @@ end
 
 function load_cards(filename="reviews.json")
     open(filename, "r") do f
-        return read(f, String)                           |>
-                JSON.parse                               |>
-                (json -> json["cards_vocabulary_jp_en"]) |>
-                parse_cards
+        return read(f, String) |>
+               JSON.parse |>
+               (json -> json["cards_vocabulary_jp_en"]) |>
+               parse_cards
     end
 end
 
@@ -109,11 +109,11 @@ end
 
 function tabulate_card_data(cards)
     rows = [(
-        word = card.spelling,
-        reading = card.reading,
-        review_count = length(card.reviews),
-        last_reviewed = latest_review(card).datetime,
-        first_encountered = earliest_review(card).datetime,
+        word=card.spelling,
+        reading=card.reading,
+        review_count=length(card.reviews),
+        last_reviewed=latest_review(card).datetime,
+        first_encountered=earliest_review(card).datetime,
     ) for card in cards]
 
     df = DataFrame()
@@ -126,8 +126,8 @@ end
 
 function tabulate_review_data(reviews)
     rows = [(
-        datetime = review.datetime,
-        grade = review.grade,
+        datetime=review.datetime,
+        grade=review.grade,
     ) for review in reviews]
 
     df = DataFrame()
