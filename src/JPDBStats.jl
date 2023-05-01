@@ -4,7 +4,7 @@ using CSV
 using DataFrames
 using Dates
 using JSON
-using Plots
+using PlotlyJS
 
 #= Structs =#
 
@@ -113,7 +113,8 @@ end
 #= Views =#
 
 function plot_counter(counter)
-    bar(collect(keys(counter)), collect(values(counter)))
+    data = bar(; x=collect(keys(counter)), y=collect(values(counter)))
+    plot(data)
 end
 
 function tabulate_card_data(cards)
