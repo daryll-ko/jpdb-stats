@@ -78,6 +78,15 @@ function group_by_unit(reviews, unit)
     return counter
 end
 
+function group_by_result(reviews)
+    counter = Dict{String,Int}()
+    for review in reviews
+        result = review.grade
+        counter[result] = get(counter, result, 0) + 1
+    end
+    return counter
+end
+
 #= Extractions =#
 
 function load_cards(filename="reviews.json")
