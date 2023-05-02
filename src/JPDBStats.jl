@@ -137,6 +137,18 @@ function get_all_reviews(cards)
     return reviews
 end
 
+function get_unique_kanji(cards)
+    unique_kanji = Set{String}()
+    kanji_regex = r"[一-龯]"
+    for card in cards
+        regex_matches = collect(eachmatch(kanji_regex, card.spelling))
+        for regex_match in regex_matches
+            push!(unique_kanji, regex_match.match)
+        end
+    end
+    return unique_kanji
+end
+
 function get_new_reviews(reviews)
     return filter(review -> review.grade == "unknown", reviews)
 end
