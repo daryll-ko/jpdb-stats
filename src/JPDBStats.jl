@@ -137,16 +137,16 @@ function get_all_reviews(cards)
     return reviews
 end
 
-function get_unique_kanji(cards)
-    unique_kanji = Set{String}()
+function get_kanji_counter(cards)
+    kanji_counter = Dict{String,Int}()
     kanji_regex = r"[一-龯]"
     for card in cards
-        regex_matches = collect(eachmatch(kanji_regex, card.spelling))
-        for regex_match in regex_matches
-            push!(unique_kanji, regex_match.match)
+        matches = unique(map(regex_match -> regex_match.match, collect(eachmatch(kanji_regex, card.spelling))))
+        for match in matches
+            kanji_counter[match] = get(kanji_counter, match, 0) + 1
         end
     end
-    return unique_kanji
+    return kanji_counter
 end
 
 function get_new_reviews(reviews)
