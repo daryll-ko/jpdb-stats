@@ -120,7 +120,7 @@ end
 
 #= Extractions =#
 
-function load_cards(filename="reviews.json")
+function load_cards(filename = "reviews.json")
     open(filename, "r") do f
         return read(f, String) |>
                JSON.parse |>
@@ -141,7 +141,12 @@ function get_kanji_counter(cards)
     kanji_counter = Dict{String,Int}()
     kanji_regex = r"[一-龯]"
     for card in cards
-        matches = unique(map(regex_match -> regex_match.match, collect(eachmatch(kanji_regex, card.spelling))))
+        matches = unique(
+            map(
+                regex_match -> regex_match.match,
+                collect(eachmatch(kanji_regex, card.spelling)),
+            ),
+        )
         for match in matches
             kanji_counter[match] = get(kanji_counter, match, 0) + 1
         end
@@ -160,26 +165,50 @@ function plot_reviews_by_result(reviews)
 
     new_counter, pass_counter, fail_counter = group_results_by_date(reviews)
 
-    new_data = bar(collect(keys(new_counter)), collect(values(new_counter)), name="New", marker_color="rgb(99,110,250)", linewidth=0)
+    new_data = bar(
+        collect(keys(new_counter)),
+        collect(values(new_counter)),
+        name = "New",
+        marker_color = "rgb(99,110,250)",
+        linewidth = 0,
+    )
 
-    pass_data = bar(x=collect(keys(pass_counter)), y=collect(values(pass_counter)), name="Pass", marker_color="rgb(0,204,150)", linewidth=0)
+    pass_data = bar(
+        x = collect(keys(pass_counter)),
+        y = collect(values(pass_counter)),
+        name = "Pass",
+        marker_color = "rgb(0,204,150)",
+        linewidth = 0,
+    )
 
-    fail_data = bar(x=collect(keys(fail_counter)), y=collect(values(fail_counter)), name="Fail", marker_color="rgb(210,77,53)", linewidth=0)
+    fail_data = bar(
+        x = collect(keys(fail_counter)),
+        y = collect(values(fail_counter)),
+        name = "Fail",
+        marker_color = "rgb(210,77,53)",
+        linewidth = 0,
+    )
 
     data = [fail_data, pass_data, new_data]
-    layout = Layout(plot_bgcolor="rgb(17,17,17)", paper_bgcolor="rgb(17,17,17)", barmode="stack")
+    layout = Layout(
+        plot_bgcolor = "rgb(17,17,17)",
+        paper_bgcolor = "rgb(17,17,17)",
+        barmode = "stack",
+    )
 
     plot(data, layout)
 end
 
 function tabulate_card_data(cards)
-    rows = [(
-        word=card.spelling,
-        reading=card.reading,
-        review_count=length(card.reviews),
-        last_reviewed=latest_review(card).datetime,
-        first_encountered=earliest_review(card).datetime,
-    ) for card in cards]
+    rows = [
+        (
+            word = card.spelling,
+            reading = card.reading,
+            review_count = length(card.reviews),
+            last_reviewed = latest_review(card).datetime,
+            first_encountered = earliest_review(card).datetime,
+        ) for card in cards
+    ]
 
     df = DataFrame()
     for row in rows
@@ -190,10 +219,7 @@ function tabulate_card_data(cards)
 end
 
 function tabulate_review_data(reviews)
-    rows = [(
-        datetime=review.datetime,
-        grade=review.grade,
-    ) for review in reviews]
+    rows = [(datetime = review.datetime, grade = review.grade) for review in reviews]
 
     df = DataFrame()
     for row in rows
