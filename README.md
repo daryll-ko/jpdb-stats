@@ -1,5 +1,9 @@
 # `JPDBStats.jl`
 
+<div align="center">
+	<img src="assets/history.png" />
+</div
+
 ## Setup
 
 I assume you have [Julia](https://julialang.org/)?
