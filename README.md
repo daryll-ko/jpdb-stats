@@ -2,7 +2,7 @@
 
 <div align="center">
 	<img src="assets/history.png" />
-</div
+</div>
 
 ## Setup
 
