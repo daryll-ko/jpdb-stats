@@ -1,7 +1,7 @@
 # `JPDBStats.jl`
 
 <div align="center">
-	<img src="assets/history.png" />
+	<img src="assets/cumulative_history.png" />
 </div>
 
 ## Setup
