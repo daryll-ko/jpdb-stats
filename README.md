@@ -149,7 +149,7 @@ In contrast, analyzing my stats in `jpdb` gives me relevant ground to work on. O
 
 One fun thing to think about throughout this project was how to keep the interface as modular as possible. If I had a table of card data, how could I design things to make feature extraction seamless?
 
-At any rate, looking at my own stats has shown me how integral `jpdb` has been to my growth as an immersion learner since May 2022. My competence before and after incorporating it into my own life is staggering; I truly am happy I'm on the side where I want to be now.
+At any rate, looking at my own stats has shown me how integral `jpdb` has been to my growth as an immersion learner. My competence before and after incorporating it into my own life is staggering; I truly am happy I'm on the side where I want to be now.
 
 Well, this is a journey that I expect to last an eternity, so you could say this is barely the first chapter into a grand adventure. I hope my future self has a great time!
 
