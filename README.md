@@ -2,6 +2,7 @@
 
 <div align="center">
 	<img src="assets/cumulative_history.png" />
+	My jpdb history, according to Bijak's visualizer
 </div>
 
 ## Setup
