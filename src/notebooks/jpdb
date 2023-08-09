@@ -1,0 +1,41 @@
+### A Pluto.jl notebook ###
+# v0.19.27
+
+using Markdown
+using InteractiveUtils
+
+# ╔═╡ 644037fa-2f64-441c-abe3-d145f63e9602
+begin
+	using Dates
+	using JSON
+end
+
+# ╔═╡ d6cc3a7d-6cad-4ff5-b601-4209a494abbe
+struct Review
+    datetime::DateTime
+    grade::String
+end
+
+# ╔═╡ 7b014fda-366f-11ee-2ab1-c95a638d2b04
+struct Card
+    spelling::String
+    reading::String
+    reviews::Vector{Review}
+end
+
+# ╔═╡ ebc30763-e63b-421e-8d66-7ad8fb951800
+
+
+# ╔═╡ c77642ce-f409-4d93-9530-fe32df1e7bb4
+c = Card("魔女", "まじょ", [])
+
+# ╔═╡ af833c99-a450-4a35-817e-d282c0299746
+length(c.spelling)
+
+# ╔═╡ Cell order:
+# ╠═644037fa-2f64-441c-abe3-d145f63e9602
+# ╠═d6cc3a7d-6cad-4ff5-b601-4209a494abbe
+# ╠═7b014fda-366f-11ee-2ab1-c95a638d2b04
+# ╠═ebc30763-e63b-421e-8d66-7ad8fb951800
+# ╠═c77642ce-f409-4d93-9530-fe32df1e7bb4
+# ╠═af833c99-a450-4a35-817e-d282c0299746
