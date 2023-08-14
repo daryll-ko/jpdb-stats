@@ -67,6 +67,33 @@ cards = open(cards_filename, "r") do f
 	parse_cards
 end
 
+# ╔═╡ d49abd42-c93e-43ab-bb41-c73eef330854
+length(cards)
+
+# ╔═╡ 862cc331-99ef-4e3d-8b4a-88428b26b0bb
+function get_kanji_counter(cards)
+    kanji_counter = Dict{String,Int}()
+    kanji_regex = r"[一-龯]"
+    for card in cards
+        matches = unique(
+            map(
+                regex_match -> regex_match.match,
+                collect(eachmatch(kanji_regex, card.spelling)),
+            ),
+        )
+        for match in matches
+            kanji_counter[match] = get(kanji_counter, match, 0) + 1
+        end
+    end
+    return kanji_counter
+end
+
+# ╔═╡ 8fcba01a-d700-46fc-a308-cf5c5e4db9c8
+kanji_counter = get_kanji_counter(cards)
+
+# ╔═╡ 7117465f-4b30-4d80-8389-f4593d1045e2
+length(kanji_counter)
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -148,13 +175,17 @@ uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
 # ╠═644037fa-2f64-441c-abe3-d145f63e9602
 # ╠═d6cc3a7d-6cad-4ff5-b601-4209a494abbe
 # ╠═7b014fda-366f-11ee-2ab1-c95a638d2b04
-# ╠═62ec0354-5560-4470-b4c2-640e241dee7e
-# ╠═346747a9-9940-4955-aa2f-be3cfa38d04f
-# ╠═032c0df7-c6a4-4b64-baec-ed4c9443d716
-# ╠═67fe9c8b-75fb-41d7-a416-3084ef583e66
-# ╠═233c4b66-1591-492e-af33-c0d359e295bd
+# ╟─62ec0354-5560-4470-b4c2-640e241dee7e
+# ╟─346747a9-9940-4955-aa2f-be3cfa38d04f
+# ╟─032c0df7-c6a4-4b64-baec-ed4c9443d716
+# ╟─67fe9c8b-75fb-41d7-a416-3084ef583e66
+# ╟─233c4b66-1591-492e-af33-c0d359e295bd
 # ╠═05b93b07-68d5-459e-b1c7-b51174139610
 # ╠═66ba483a-f5f1-4666-ae27-dd53941c42cc
 # ╠═347bcddd-6ffc-45b2-baea-89361ddae480
+# ╠═d49abd42-c93e-43ab-bb41-c73eef330854
+# ╟─862cc331-99ef-4e3d-8b4a-88428b26b0bb
+# ╠═8fcba01a-d700-46fc-a308-cf5c5e4db9c8
+# ╠═7117465f-4b30-4d80-8389-f4593d1045e2
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
