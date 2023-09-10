@@ -1,4 +1,4 @@
-# `JPDBStats.jl`
+# `jpdb-stats`
 
 <div align="center">
 	<img src="assets/cumulative_history.png" />
