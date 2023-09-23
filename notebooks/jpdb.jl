@@ -108,7 +108,7 @@ JSON = "~0.21.4"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.9.2"
+julia_version = "1.9.3"
 manifest_format = "2.0"
 project_hash = "92e5efaf4eb324d929cb42e9a20b5734b00b06f9"
 
