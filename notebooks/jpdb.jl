@@ -136,13 +136,37 @@ function get_kanji_counter(cards)
 end
 
 # ╔═╡ 10502920-d73e-471b-bbde-85006574c0da
-function groupby_date(reviews)
+function get_date_counter(reviews)
 	date_counter = Dict()
 	for review in reviews
 		date = Date(review.timestamp)
 		date_counter[date] = get(date_counter, date, 0) + 1
 	end
 	return date_counter
+end
+
+# ╔═╡ f1f45c3e-3c7a-4f73-aac5-f0a81b651ccc
+function is_known(card)
+	return any(review -> review.grade == "known", card.reviews)
+end
+
+# ╔═╡ 53fd5936-1f6a-4c60-9062-86dac1aa1962
+is_unknown(card) = !is_known(card)
+
+# ╔═╡ 60949a39-55f9-4638-95f4-d32829eb8d8e
+function simplify_grade(grade::String)
+	if grade ∈ ["okay", "easy", "pass"]
+		return "pass"
+	elseif grade ∈ ["nothing", "something", "hard", "fail"]
+		return "fail"
+	else
+		return "new"
+	end
+end
+
+# ╔═╡ 8e373a0b-890b-4c9b-95fa-6f7134bebc55
+function simplify_grade(review::Review)
+	return Review(review.timestamp, simplify_grade(review.grade))
 end
 
 # ╔═╡ 5f7f60e5-a983-479c-a1a7-dd30bca9171c
@@ -153,20 +177,49 @@ cards =
 	read(IOBuffer(reviews_file["data"]), String) |>
 	JSON.parse |>
 	json -> json["cards_vocabulary_jp_en"] |>
-	parse_cards
+	parse_cards |>
+	filter(is_unknown)
 
 # ╔═╡ 721e5dc6-efd2-4faf-afd1-72d5a28c73a5
 reviews = mapreduce(get_reviews, vcat, cards) |>
-	reviews -> sort(reviews, by = get_timestamp)
+	reviews -> sort(reviews, by = get_timestamp) .|>
+	simplify_grade
+
+# ╔═╡ 70899e71-17a3-4c26-85db-cebed24fe856
+possible_grades = reviews .|> get_grade |> unique
+
+# ╔═╡ dca1fbb8-edda-49a0-a450-b5953c869e3d
+function get_date_counter_by_grade(reviews)
+	date_counter_by_grade = Dict()
+	for grade in possible_grades
+		date_counter_by_grade[grade] = Dict()
+	end
+	for review in reviews
+		date = Date(review.timestamp)
+		date_counter_by_grade[review.grade][date] =
+			get(date_counter_by_grade[review.grade], date, 0) + 1
+	end
+	for date in keys(date_counter_by_grade["pass"])
+		for grade in possible_grades
+			if !haskey(date_counter_by_grade[grade], date)
+				date_counter_by_grade[grade][date] = 0
+			end
+		end
+	end
+	return date_counter_by_grade
+end
 
 # ╔═╡ 8fcba01a-d700-46fc-a308-cf5c5e4db9c8
 kanji_counter = get_kanji_counter(cards)
 
 # ╔═╡ bdee6c84-eb7b-4171-8f24-c98c43255d50
-date_counter = groupby_date(reviews)
+date_counter = get_date_counter(reviews)
 
 # ╔═╡ cb3b12c1-3d13-44ca-869f-29f94c815116
 date_counter_sorted = collect(sort(date_counter))
+
+# ╔═╡ 6582f0d8-634b-49d9-9d1b-a0f73286b6d4
+date_counter_by_grade = get_date_counter_by_grade(reviews)
 
 # ╔═╡ 629636de-3336-44b8-b298-698eeee3accb
 kanji_known = Set(keys(kanji_counter))
@@ -185,13 +238,20 @@ num_days = length(date_counter)
 
 # ╔═╡ d81a7593-20e2-44d2-b9bf-f6276c50a25f
 begin
-	fig, ax, l = barplot(1:num_days, date_counter_sorted .|> last,
+	x = 1:num_days
+	y₁ = collect(sort(date_counter_by_grade["new"])) .|> last
+	y₂ = collect(sort(date_counter_by_grade["pass"])) .|> last
+	y₃ = collect(sort(date_counter_by_grade["fail"])) .|> last
+	fig, ax, l = barplot(x, y₁ + y₂ + y₃,
 		axis = (;
 			title = "Reviews per day",
 			xticklabelrotation = π/2,
 			xticks = (1:14:num_days, string.(date_counter_sorted .|> first)[1:14:num_days]),
-		)
+		),
+		color = :blue
 	)
+	barplot!(ax, x, y₂ + y₃, color = :lightgreen)
+	barplot!(ax, x, y₃, color = :red)
 	fig
 end
 
@@ -1864,12 +1924,19 @@ version = "3.5.0+0"
 # ╟─0d1eea83-a24e-492b-9475-06efc706b62e
 # ╟─862cc331-99ef-4e3d-8b4a-88428b26b0bb
 # ╟─10502920-d73e-471b-bbde-85006574c0da
+# ╟─dca1fbb8-edda-49a0-a450-b5953c869e3d
+# ╟─f1f45c3e-3c7a-4f73-aac5-f0a81b651ccc
+# ╟─53fd5936-1f6a-4c60-9062-86dac1aa1962
+# ╟─60949a39-55f9-4638-95f4-d32829eb8d8e
+# ╟─8e373a0b-890b-4c9b-95fa-6f7134bebc55
 # ╟─5f7f60e5-a983-479c-a1a7-dd30bca9171c
 # ╟─347bcddd-6ffc-45b2-baea-89361ddae480
 # ╟─721e5dc6-efd2-4faf-afd1-72d5a28c73a5
+# ╟─70899e71-17a3-4c26-85db-cebed24fe856
 # ╟─8fcba01a-d700-46fc-a308-cf5c5e4db9c8
 # ╟─bdee6c84-eb7b-4171-8f24-c98c43255d50
 # ╟─cb3b12c1-3d13-44ca-869f-29f94c815116
+# ╟─6582f0d8-634b-49d9-9d1b-a0f73286b6d4
 # ╟─629636de-3336-44b8-b298-698eeee3accb
 # ╟─fe123bec-051a-4189-9116-16c89ce583a9
 # ╟─a7db8b84-c482-4772-b68e-f5abc74a3388
