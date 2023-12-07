@@ -123,6 +123,11 @@ function get_kanji(spelling)
 			unique
 end
 
+# ╔═╡ 1ae91945-96b9-430c-a2ce-b8abb9a621ba
+function num_kanji(spelling)
+	return spelling |> get_kanji |> length
+end
+
 # ╔═╡ 862cc331-99ef-4e3d-8b4a-88428b26b0bb
 function get_kanji_counter(cards)
     kanji_counter = Dict()
@@ -208,6 +213,13 @@ function get_date_counter_by_grade(reviews)
 	end
 	return date_counter_by_grade
 end
+
+# ╔═╡ 1d291445-66db-446a-89db-94f1d7949d61
+kanji_known_2 = cards .|>
+	get_spelling .|>
+	get_kanji |>
+	A -> reduce(vcat, A) |>
+	Set
 
 # ╔═╡ 8fcba01a-d700-46fc-a308-cf5c5e4db9c8
 kanji_counter = get_kanji_counter(cards)
@@ -1922,6 +1934,7 @@ version = "3.5.0+0"
 # ╟─67fe9c8b-75fb-41d7-a416-3084ef583e66
 # ╟─233c4b66-1591-492e-af33-c0d359e295bd
 # ╟─0d1eea83-a24e-492b-9475-06efc706b62e
+# ╟─1ae91945-96b9-430c-a2ce-b8abb9a621ba
 # ╟─862cc331-99ef-4e3d-8b4a-88428b26b0bb
 # ╟─10502920-d73e-471b-bbde-85006574c0da
 # ╟─dca1fbb8-edda-49a0-a450-b5953c869e3d
@@ -1938,6 +1951,7 @@ version = "3.5.0+0"
 # ╟─cb3b12c1-3d13-44ca-869f-29f94c815116
 # ╟─6582f0d8-634b-49d9-9d1b-a0f73286b6d4
 # ╟─629636de-3336-44b8-b298-698eeee3accb
+# ╟─1d291445-66db-446a-89db-94f1d7949d61
 # ╟─fe123bec-051a-4189-9116-16c89ce583a9
 # ╟─a7db8b84-c482-4772-b68e-f5abc74a3388
 # ╟─1e24c261-f1bc-464e-b9c0-7b8cbf2563fa
