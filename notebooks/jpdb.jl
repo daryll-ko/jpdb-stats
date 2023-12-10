@@ -31,6 +31,9 @@ md"You'll need your `reviews.json` file from jpdb's `Settings` page:"
 # ╔═╡ 47c6c741-170f-4b87-88c0-a54faa5aed6f
 @bind reviews_file FilePicker([MIME("application/json")])
 
+# ╔═╡ 4fc170e6-a12e-4ff3-b5d2-0706e71f3065
+md"Show cumulatively? $(@bind cumulative CheckBox())"
+
 # ╔═╡ 44905962-ab43-4b55-a877-f77aedb07656
 md"## Appendix"
 
@@ -82,6 +85,9 @@ jouyou_kanji = Set(string.(collect(jouyou_kanji_string)))
 
 # ╔═╡ 116b6a25-a2b3-42f1-978d-4dc231f5a6c5
 num_jouyou_kanji = length(jouyou_kanji)
+
+# ╔═╡ 393dcc0b-0af4-455f-83df-ab39d3697afa
+grade_to_color = Dict("new" => :blue, "pass" => :lightgreen, "fail" => :red)
 
 # ╔═╡ 0fbc7f04-04be-411c-bd00-c2695921860c
 md"### Helpers"
@@ -214,13 +220,6 @@ function get_date_counter_by_grade(reviews)
 	return date_counter_by_grade
 end
 
-# ╔═╡ 1d291445-66db-446a-89db-94f1d7949d61
-kanji_known_2 = cards .|>
-	get_spelling .|>
-	get_kanji |>
-	A -> reduce(vcat, A) |>
-	Set
-
 # ╔═╡ 8fcba01a-d700-46fc-a308-cf5c5e4db9c8
 kanji_counter = get_kanji_counter(cards)
 
@@ -236,6 +235,13 @@ date_counter_by_grade = get_date_counter_by_grade(reviews)
 # ╔═╡ 629636de-3336-44b8-b298-698eeee3accb
 kanji_known = Set(keys(kanji_counter))
 
+# ╔═╡ 1d291445-66db-446a-89db-94f1d7949d61
+kanji_known_2 = cards .|>
+	get_spelling .|>
+	get_kanji |>
+	A -> reduce(vcat, A) |>
+	Set
+
 # ╔═╡ fe123bec-051a-4189-9116-16c89ce583a9
 jouyou_kanji_known = kanji_known ∩ jouyou_kanji
 
@@ -250,20 +256,33 @@ num_days = length(date_counter)
 
 # ╔═╡ d81a7593-20e2-44d2-b9bf-f6276c50a25f
 begin
+	fig = Figure()
+	ax = Axis(fig[1, 1])
+
+	ax.title = cumulative ? "Reviews per day (cumulative)" : "Reviews per day"
+	ax.xticklabelrotation = π/4
+	ax.xticks = (1:21:num_days, string.(date_counter_sorted .|> first)[1:21:num_days])
+	ax.ytickformat = "{:d}"
+	ax.yticks = cumulative ? (0:5*10^4:25*10^4) : (0:10^2:10^3)
+	
 	x = 1:num_days
-	y₁ = collect(sort(date_counter_by_grade["new"])) .|> last
-	y₂ = collect(sort(date_counter_by_grade["pass"])) .|> last
-	y₃ = collect(sort(date_counter_by_grade["fail"])) .|> last
-	fig, ax, l = barplot(x, y₁ + y₂ + y₃,
-		axis = (;
-			title = "Reviews per day",
-			xticklabelrotation = π/2,
-			xticks = (1:14:num_days, string.(date_counter_sorted .|> first)[1:14:num_days]),
-		),
-		color = :blue
+	ys = map(
+		g -> (collect(sort(date_counter_by_grade[g])) .|>
+						last |>
+						(cumulative ? cumsum : identity), g),
+		possible_grades
 	)
-	barplot!(ax, x, y₂ + y₃, color = :lightgreen)
-	barplot!(ax, x, y₃, color = :red)
+	
+	cur_total = zeros(Int, num_days)
+	for (y, _) in ys
+		cur_total += y
+	end
+	
+	for (i, (y, grade)) in enumerate(ys)
+		barplot!(ax, x, cur_total, color = grade_to_color[grade])
+		cur_total -= y
+	end
+
 	fig
 end
 
@@ -1910,6 +1929,7 @@ version = "3.5.0+0"
 # ╟─88d99abe-a84f-40e6-9519-5706d52138f0
 # ╟─47c6c741-170f-4b87-88c0-a54faa5aed6f
 # ╟─f93b75a0-26e8-4b89-9c72-358d0412d7ca
+# ╟─4fc170e6-a12e-4ff3-b5d2-0706e71f3065
 # ╟─d81a7593-20e2-44d2-b9bf-f6276c50a25f
 # ╟─44905962-ab43-4b55-a877-f77aedb07656
 # ╟─67ccca16-a898-4e21-86ea-d04ffc089571
@@ -1927,6 +1947,7 @@ version = "3.5.0+0"
 # ╟─f4c3feef-d7ea-4fd5-8831-ec6950f566dd
 # ╟─b93fa3b4-f431-44bb-89a3-6eb8cf18cd8b
 # ╟─116b6a25-a2b3-42f1-978d-4dc231f5a6c5
+# ╟─393dcc0b-0af4-455f-83df-ab39d3697afa
 # ╟─0fbc7f04-04be-411c-bd00-c2695921860c
 # ╟─62ec0354-5560-4470-b4c2-640e241dee7e
 # ╟─346747a9-9940-4955-aa2f-be3cfa38d04f
