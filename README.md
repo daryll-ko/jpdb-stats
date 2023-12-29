@@ -4,99 +4,21 @@
 	<img src="assets/demo.png" width="50%" />
 </div>
 
-## Setup
-
-I assume you have [Julia](https://julialang.org/)?
-
-1. Clone the project using `git@github.com:daryll-ko/JPDBStats.jl.git`.
-
-2. Download your `reviews.json` file from [jpdb's `Settings` page](https://jpdb.io/settings). If you don't use jpdb, you may use [mine](https://github.com/daryll-ko/jpdb-stats/blob/main/reviews.json) as a sample (it may not be up to date, however).
-
-3. Activate the project in the Julia REPL (make sure you're in the `jpdb-stats` folder):
-
-```bash
-(v1.8) pkg> activate .
-```
-
-4. Install the relevant packages:
-
-```bash
-(JPDBStats) pkg> instantiate
-```
-
-5. Setup Revise.jl and import the package.
-
-```bash
-julia> using Revise
-
-julia> using JPDBStats
-```
-
 ## Usage
 
-The first thing I would recommend doing is binding the package to a short variable:
+You'll need [Julia](https://julialang.org/) and [Pluto](https://github.com/fonsp/Pluto.jl).
 
-```bash
-julia> JS = JPDBStats
-```
+This _is_ a notebook, so what you want to see is dictated by the code that exists. There's an out-of-the-box review graph that can be viewed cumulatively and filtered by grade & a card table sorted by fail counts which can be filtered via regexes.
 
-This makes it so that future references to the package can be made by just typing `JS` instead of `JPDBStats`.
+Here are some example regexes for convenience:
 
-The function `load_cards` turns the JP-to-EN vocab deck of the `reviews.json` file into a list of `Card`s:
-
-```bash
-julia> cards = JS.load_cards()
-```
-
-The function `get_all_reviews` extracts all individual review instances from the list of `Card`s:
-
-```bash
-julia> reviews = JS.get_all_reviews(cards)
-```
-
-Once you've extracted your cards and their reviews, there are several ways to look at the data you have at hand in a cleaner format.
-
-The function `tabulate_card_data` returns a DataFrame containing basic information (word, reading, review count, last review date) for each card you have:
-
-```bash
-julia> df = JS.tabulate_card_data(cards)
-```
-
-Once you have your DataFrame, you can do all sorts of cool stuff with it!
-
-For example, you can sort the cards by their review count:
-
-```bash
-julia> sort(df, :review_count)
-```
-
-Or you can filter cards matching a specific regular expression using the helper function `filter_words`:
-
-```bash
-julia> no = r"^不" #「不便」や「不吉」や「不正」など
-
-julia> JS.filter_words(df, no)
-```
-
-```bash
-julia> yojijukugo = r"^[一-龯]{4}$" #「一石二鳥」や「中途半端」や「十中八九」など
-
-julia> JS.filter_words(df, yojijukugo)
-```
-
-```bash
-julia> repeater = r"^([一-龯ぁ-んァ-ン]{2})\1$|^[一-龯]々$" #「いよいよ」や「そろそろ」や「度々」や「人々」など
-
-julia> JS.filter_words(df, repeater)
-```
+| Regex | Description | Examples|
+---------------------------------
+| ^不 | words that start with「不」| 不便、不吉、不正 |
+| ^[一-龯]{4}$ | words that consist of exactly 4 漢字 (most likely 四字熟語) | 一石二鳥、中途半端、十中八九 |
+| ^([一-龯ぁ-んァ-ン]{2})\1$|^[一-龯]々$ | words that repeat (most likely 擬音) | いよいよ、そろそろ、度々、人々 |
 
 ## Notes
-
-If you've already gone through the setup instructions once, some steps become unneeded; in future sessions (i.e., when starting up `julia`), only the following steps suffice:
-
-1. Start with `pkg> activate .`
-2. Activate Revise.jl with `julia> using Revise`
-3. Activate JPDBStats.jl with `julia> using JPDBStats`
 
 Relevant types:
 
@@ -135,11 +57,23 @@ reviews.json
 └── cards_kanji_char_keyword: Card[]
 ```
 
-A `Card`'s `vid` and a `Review`'s `from_anki` status are not properties of the structs I define.
+A `Card`'s `vid` and a `Review`'s `from_anki` status aren't properties of structs defined in the notebook.
 
-Since I only use JP to EN vocab cards, the decks `cards_vocabulary_en_jp`, `cards_kanji_keyword_char`, and `cards_kanji_char_keyword` are empty for me.
+Since I only use JP to EN vocab cards, the decks `cards_vocabulary_en_jp`, `cards_kanji_keyword_char`, and `cards_kanji_char_keyword` are empty for me. You can change `parse_cards` to suit your needs.
 
 ## Write-up
+
+### 12/29/23
+
+It's been 10 months! So much has happened since then: celebrating my 1 year Refold anniversary, passing N1, hitting 20K non-redundant words, immersing in all sorts of things. I'm kind of surprised I've gone this far; consistency can truly result in wild things happening.
+
+After almost 600 days of doing this, I'm finally lowering daily cards from 30 to 10; I think it's just about the right time to dive even deeper into other aspects of JP language and culture.
+
+I'll see if I can do something about leeches; I've heard some anecdotes on the JPDB server about manual leech-picking being a godsend, and I'd like to explore that idea.
+
+To me that wrote the previous write-up, things are still going strong. Thanks for pushing through, and here's to a 2024 filled with more fun! ^^
+
+### 02/22/23
 
 This was inspired by `bijak`'s [`jpdb_stats` repo](https://github.com/bijak/jpdb_stats). Because I have a copious amount of jpdb.io data, I thought this would be an excellent opportunity to work with Julia from a data-driven perspective.
 
