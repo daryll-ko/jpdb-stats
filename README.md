@@ -13,7 +13,7 @@ This _is_ a notebook, so what you want to see is dictated by the code that exist
 Here are some example regexes for convenience:
 
 | Regex | Description | Examples |
----------------------------------
+|-------|-------------|----------|
 | `^不` | words that start with「不」| 不便、不吉、不正 |
 | `^[一-龯]{4}$` | words that consist of exactly 4 漢字 (most likely 四字熟語) | 一石二鳥、中途半端、十中八九 |
 | `^([一-龯ぁ-んァ-ン]{2})\1$|^[一-龯]々$` | words that repeat (most likely 擬音) | いよいよ、そろそろ、度々、人々 |
