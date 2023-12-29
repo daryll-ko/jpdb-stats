@@ -6,7 +6,9 @@
 
 ## Usage
 
-You'll need [Julia](https://julialang.org/) and [Pluto](https://github.com/fonsp/Pluto.jl).
+You'll need [Julia](https://julialang.org/) and [Pluto](https://github.com/fonsp/Pluto.jl). You'll also need your `reviews.json` file from JPDB's Settings page (you can use mine as an example, though it may not be up to date).
+
+Package precompilation may take 5-10 minutes depending on your device. Go do your reviews while waiting! ^^
 
 This _is_ a notebook, so what you want to see is dictated by the code that exists. There's an out-of-the-box review graph that can be viewed cumulatively and filtered by grade & a card table sorted by fail counts which can be filtered via regexes.
 
