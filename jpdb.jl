@@ -95,9 +95,6 @@ num_jouyou_kanji = length(jouyou_kanji)
 # ╔═╡ 393dcc0b-0af4-455f-83df-ab39d3697afa
 grade_to_color = Dict("new" => :blue, "pass" => :lightgreen, "fail" => :red)
 
-# ╔═╡ 2939a5aa-54c6-4ac2-996e-b9dddfe84dca
-md"Filter by grade: $(@bind grades_to_show MultiCheckBox(collect(keys(grade_to_color))))"
-
 # ╔═╡ 832f5bd9-d74c-4379-ad6d-e2c9761ee5c3
 grade_to_order = Dict("new" => 0, "pass" => 1, "fail" => 2)
 
@@ -224,6 +221,9 @@ reviews = mapreduce(get_reviews, vcat, cards) |>
 
 # ╔═╡ 70899e71-17a3-4c26-85db-cebed24fe856
 possible_grades = reviews .|> get_grade |> unique
+
+# ╔═╡ 2939a5aa-54c6-4ac2-996e-b9dddfe84dca
+md"Filter by grade: $(@bind grades_to_show MultiCheckBox(possible_grades, default=possible_grades))"
 
 # ╔═╡ dca1fbb8-edda-49a0-a450-b5953c869e3d
 function get_date_counter_by_grade(reviews)
