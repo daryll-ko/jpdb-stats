@@ -22,6 +22,8 @@ Here are some example regexes for convenience:
 
 ## Notes
 
+The `reviews.json` file does not include cards marked `I'll never forget`, so the stats you see may be a bit inaccurate in that regard.
+
 Relevant types:
 
 ```ts
