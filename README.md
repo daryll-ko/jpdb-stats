@@ -1,8 +1,7 @@
 # `jpdb-stats`
 
 <div align="center">
-	<img src="assets/demo.png" />
-	My jpdb history, according to Bijak's visualizer
+	<img src="assets/demo.png" width="50%" />
 </div>
 
 ## Setup
