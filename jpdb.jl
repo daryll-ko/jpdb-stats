@@ -17,6 +17,7 @@ end
 # ╔═╡ 644037fa-2f64-441c-abe3-d145f63e9602
 begin
 	using CairoMakie
+	using DataFrames
 	using Dates
 	using JSON
 	using PlutoUI
@@ -33,6 +34,11 @@ md"You'll need your `reviews.json` file from jpdb's `Settings` page:"
 
 # ╔═╡ 4fc170e6-a12e-4ff3-b5d2-0706e71f3065
 md"Show cumulatively? $(@bind cumulative CheckBox())"
+
+# ╔═╡ 8eb73416-bfd3-454e-9e2b-e3c0063792c2
+md"""
+DataFrame filter: $(@bind df_filter TextField(default="", placeholder=nothing))
+"""
 
 # ╔═╡ 44905962-ab43-4b55-a877-f77aedb07656
 md"## Appendix"
@@ -186,6 +192,20 @@ function simplify_grade(review::Review)
 	return Review(review.timestamp, simplify_grade(review.grade))
 end
 
+# ╔═╡ f6f4e5f5-b793-456f-bf21-86718e9f6a39
+function num_fails(card)
+	return 										   card |>
+			 								get_reviews |>
+		  rs -> filter(r -> get_grade(r) == "fail", rs) |>
+		  										 length
+end
+
+# ╔═╡ 5a2b7466-90e2-430e-9817-7cbd980e9323
+function matches_regex(card, regex)
+	return match(regex, get_spelling(card)) !== nothing ||
+		   match(regex, get_reading(card)) !== nothing
+end
+
 # ╔═╡ 5f7f60e5-a983-479c-a1a7-dd30bca9171c
 md"### Reactive values"
 
@@ -237,6 +257,24 @@ date_counter_sorted = collect(sort(date_counter))
 
 # ╔═╡ 6582f0d8-634b-49d9-9d1b-a0f73286b6d4
 date_counter_by_grade = get_date_counter_by_grade(reviews)
+
+# ╔═╡ c0d38805-82ed-4afa-bb67-e46abbedadab
+cards_to_show = try
+	filter(c -> matches_regex(c, Regex(df_filter)), cards)
+catch _
+	[]
+end
+
+# ╔═╡ 3ea823e8-b2cb-4dfb-a5d2-b4c80560b6ed
+begin
+	df = DataFrame(
+		Card = cards_to_show .|> get_spelling,
+		Reading = cards_to_show .|> get_reading,
+		Fails = cards_to_show .|> num_fails,
+	)
+	sort!(df, [:Fails], rev=[true])
+	df
+end
 
 # ╔═╡ 629636de-3336-44b8-b298-698eeee3accb
 kanji_known = Set(keys(kanji_counter))
@@ -325,12 +363,14 @@ num_non_jouyou_kanji_known = length(non_jouyou_kanji_known)
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 CairoMakie = "~0.10.11"
+DataFrames = "~1.6.1"
 JSON = "~0.21.4"
 PlutoUI = "~0.7.52"
 """
@@ -341,7 +381,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.10.0"
 manifest_format = "2.0"
-project_hash = "2c566d87a51cd54cbcfc422b8ab8d6fb7192ef18"
+project_hash = "cad9e2cf9eec389334408262ec196442f307538b"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -564,10 +604,21 @@ git-tree-sha1 = "d05d9e7b7aedff4e5b51a029dced05cfb6125781"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.6.2"
 
+[[deps.Crayons]]
+git-tree-sha1 = "249fe38abf76d48563e2f4556bebd215aa317e15"
+uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+version = "4.1.1"
+
 [[deps.DataAPI]]
 git-tree-sha1 = "8da84edb865b0b5b0100c0666a9bc9a0b71c553c"
 uuid = "9a962f9c-6df0-11e9-0e5d-c546b8b5ee8a"
 version = "1.15.0"
+
+[[deps.DataFrames]]
+deps = ["Compat", "DataAPI", "DataStructures", "Future", "InlineStrings", "InvertedIndices", "IteratorInterfaceExtensions", "LinearAlgebra", "Markdown", "Missings", "PooledArrays", "PrecompileTools", "PrettyTables", "Printf", "REPL", "Random", "Reexport", "SentinelArrays", "SortingAlgorithms", "Statistics", "TableTraits", "Tables", "Unicode"]
+git-tree-sha1 = "04c738083f29f86e62c8afc341f0967d8717bdb8"
+uuid = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+version = "1.6.1"
 
 [[deps.DataStructures]]
 deps = ["Compat", "InteractiveUtils", "OrderedCollections"]
@@ -915,6 +966,12 @@ git-tree-sha1 = "ea8031dea4aff6bd41f1df8f2fdfb25b33626381"
 uuid = "d25df0c9-e2be-5dd7-82c8-3ad0b3e990b9"
 version = "0.1.4"
 
+[[deps.InlineStrings]]
+deps = ["Parsers"]
+git-tree-sha1 = "9cc2baf75c6d09f9da536ddf58eb2f29dedaf461"
+uuid = "842dd82b-1e85-43dc-bf29-5d0ee9dffc48"
+version = "1.4.0"
+
 [[deps.IntegerMathUtils]]
 git-tree-sha1 = "b8ffb903da9f7b8cf695a8bead8e01814aa24b30"
 uuid = "18e54dd8-cb9d-406c-a71d-865a43cbb235"
@@ -951,6 +1008,11 @@ weakdeps = ["Statistics"]
 
     [deps.IntervalSets.extensions]
     IntervalSetsStatisticsExt = "Statistics"
+
+[[deps.InvertedIndices]]
+git-tree-sha1 = "0dc7b50b8d436461be01300fd8cd45aa0274b038"
+uuid = "41ab1584-1d38-5bbf-9106-f11c6c58b48f"
+version = "1.3.0"
 
 [[deps.IrrationalConstants]]
 git-tree-sha1 = "630b497eafcc20001bba38a4651b327dcfc491d2"
@@ -1417,6 +1479,12 @@ version = "4.0.4"
     MakieCore = "20f20a25-4f0e-4fdf-b5d1-57303727442b"
     MutableArithmetics = "d8a4904e-b15c-11e9-3269-09a3773c0cb0"
 
+[[deps.PooledArrays]]
+deps = ["DataAPI", "Future"]
+git-tree-sha1 = "36d8b4b899628fb92c2749eb488d884a926614d3"
+uuid = "2dfb63ee-cc39-5dd5-95bd-886bf059d720"
+version = "1.4.3"
+
 [[deps.PositiveFactorizations]]
 deps = ["LinearAlgebra"]
 git-tree-sha1 = "17275485f373e6673f7e7f97051f703ed5b15b20"
@@ -1434,6 +1502,12 @@ deps = ["TOML"]
 git-tree-sha1 = "7eb1686b4f04b82f96ed7a4ea5890a4f0c7a09f1"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
 version = "1.4.0"
+
+[[deps.PrettyTables]]
+deps = ["Crayons", "LaTeXStrings", "Markdown", "PrecompileTools", "Printf", "Reexport", "StringManipulation", "Tables"]
+git-tree-sha1 = "88b895d13d53b5577fd53379d913b9ab9ac82660"
+uuid = "08abe8d2-0d0c-5749-adfa-8a2ac140af0d"
+version = "2.3.1"
 
 [[deps.Primes]]
 deps = ["IntegerMathUtils"]
@@ -1541,6 +1615,12 @@ deps = ["Dates"]
 git-tree-sha1 = "30449ee12237627992a99d5e30ae63e4d78cd24a"
 uuid = "6c6a2e73-6563-6170-7368-637461726353"
 version = "1.2.0"
+
+[[deps.SentinelArrays]]
+deps = ["Dates", "Random"]
+git-tree-sha1 = "0e7508ff27ba32f26cd459474ca2ede1bc10991f"
+uuid = "91c51154-3ec4-41a3-a24f-3f23e20d615c"
+version = "1.4.1"
 
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
@@ -1695,6 +1775,12 @@ version = "1.3.0"
     [deps.StatsFuns.weakdeps]
     ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
     InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
+
+[[deps.StringManipulation]]
+deps = ["PrecompileTools"]
+git-tree-sha1 = "a04cabe79c5f01f4d723cc6704070ada0b9d46d5"
+uuid = "892a3eda-7b42-436c-8928-eab12a02cf0e"
+version = "0.3.4"
 
 [[deps.StructArrays]]
 deps = ["Adapt", "ConstructionBase", "DataAPI", "GPUArraysCore", "StaticArraysCore", "Tables"]
@@ -1942,6 +2028,8 @@ version = "3.5.0+0"
 # ╟─4fc170e6-a12e-4ff3-b5d2-0706e71f3065
 # ╟─2939a5aa-54c6-4ac2-996e-b9dddfe84dca
 # ╟─d81a7593-20e2-44d2-b9bf-f6276c50a25f
+# ╟─8eb73416-bfd3-454e-9e2b-e3c0063792c2
+# ╟─3ea823e8-b2cb-4dfb-a5d2-b4c80560b6ed
 # ╟─44905962-ab43-4b55-a877-f77aedb07656
 # ╟─67ccca16-a898-4e21-86ea-d04ffc089571
 # ╠═644037fa-2f64-441c-abe3-d145f63e9602
@@ -1975,6 +2063,8 @@ version = "3.5.0+0"
 # ╟─53fd5936-1f6a-4c60-9062-86dac1aa1962
 # ╟─60949a39-55f9-4638-95f4-d32829eb8d8e
 # ╟─8e373a0b-890b-4c9b-95fa-6f7134bebc55
+# ╟─f6f4e5f5-b793-456f-bf21-86718e9f6a39
+# ╟─5a2b7466-90e2-430e-9817-7cbd980e9323
 # ╟─5f7f60e5-a983-479c-a1a7-dd30bca9171c
 # ╟─347bcddd-6ffc-45b2-baea-89361ddae480
 # ╟─721e5dc6-efd2-4faf-afd1-72d5a28c73a5
@@ -1983,6 +2073,7 @@ version = "3.5.0+0"
 # ╟─bdee6c84-eb7b-4171-8f24-c98c43255d50
 # ╟─cb3b12c1-3d13-44ca-869f-29f94c815116
 # ╟─6582f0d8-634b-49d9-9d1b-a0f73286b6d4
+# ╟─c0d38805-82ed-4afa-bb67-e46abbedadab
 # ╟─629636de-3336-44b8-b298-698eeee3accb
 # ╟─1d291445-66db-446a-89db-94f1d7949d61
 # ╟─fe123bec-051a-4189-9116-16c89ce583a9
