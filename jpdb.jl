@@ -347,9 +347,9 @@ percent_jouyou_kanji_known =
 # ╔═╡ f93b75a0-26e8-4b89-9c72-358d0412d7ca
 Markdown.parse(
 	"""
-	漢字 known: $num_kanji_known
+	漢字 encountered: $num_kanji_known
 	
-	常用漢字 known: $num_jouyou_kanji_known ($percent_jouyou_kanji_known% of $num_jouyou_kanji)
+	常用漢字 encountered: $num_jouyou_kanji_known ($percent_jouyou_kanji_known% of $num_jouyou_kanji)
 	"""
 )
 
