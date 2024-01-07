@@ -197,6 +197,24 @@ function num_fails(card)
 		  										 length
 end
 
+# ╔═╡ 2a750f5a-1309-45be-8c02-9bc7d8523360
+function num_relapses(card)
+	rs = card |> get_reviews
+	result = 0
+	passed = false
+	for r in rs
+		if r.grade == "pass"
+			passed = true
+		elseif r.grade == "fail"
+			if passed
+				result += 1
+			end
+			passed = false
+		end
+	end
+	return result
+end
+
 # ╔═╡ 5a2b7466-90e2-430e-9817-7cbd980e9323
 function matches_regex(card, regex)
 	return match(regex, get_spelling(card)) !== nothing ||
@@ -271,8 +289,9 @@ begin
 		Card = cards_to_show .|> get_spelling,
 		Reading = cards_to_show .|> get_reading,
 		Fails = cards_to_show .|> num_fails,
+		Relapses = cards_to_show .|> num_relapses,
 	)
-	sort!(df, [:Fails], rev=[true])
+	sort!(df, [:Relapses], rev=[true])
 	df
 end
 
@@ -2064,6 +2083,7 @@ version = "3.5.0+0"
 # ╟─60949a39-55f9-4638-95f4-d32829eb8d8e
 # ╟─8e373a0b-890b-4c9b-95fa-6f7134bebc55
 # ╟─f6f4e5f5-b793-456f-bf21-86718e9f6a39
+# ╟─2a750f5a-1309-45be-8c02-9bc7d8523360
 # ╟─5a2b7466-90e2-430e-9817-7cbd980e9323
 # ╟─5f7f60e5-a983-479c-a1a7-dd30bca9171c
 # ╟─347bcddd-6ffc-45b2-baea-89361ddae480
